@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgriConnect — Integrated Agri Marketplace & Service Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .img-upload-area {
+      border: 2px dashed #d1d5db;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      background: #f9fafb;
+      position: relative;
+    }
+    .img-upload-area:hover { border-color: #3a9e40; background: #e8f5e9; }
+    .img-upload-area input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .img-upload-area .upload-icon { font-size: 2rem; margin-bottom: 8px; }
+    .img-upload-area .upload-text { font-size: .88rem; color: #6b7280; }
+    .img-upload-area .upload-hint { font-size: .75rem; color: #9ca3af; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="showPage('home')">
+      <span class="logo-leaf">🌾</span>
+      <span>Agri<span class="accent">Connect</span></span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <!-- dynamically filled -->
+    </div>
+    <div class="nav-actions">
+      <div class="user-pill" id="userPill" style="display:none">
+        <span class="user-avatar" id="userAvatar">F</span>
+        <span id="userNameNav" style="cursor:pointer;font-weight:600" onclick="showPage('my-profile')">Farmer</span>
+        <span class="role-badge" id="roleBadgeNav">Farmer</span>
+        <button class="btn-logout" onclick="logout()">Logout</button>
+      </div>
+      <button class="btn-primary" onclick="showPage('auth')" id="loginBtn">Login / Register</button>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<main id="app">
+
+  <!-- ═══════ HOME PAGE ═══════ -->
+  <div id="page-home" class="page active">
+    <section class="hero">
+      <div class="hero-bg-grid"></div>
+      <div class="hero-content">
+        <div class="hero-badge">🌱 India's #1 Agricultural Platform</div>
+        <h1 class="hero-title">
+          Grow More.<br/>
+          <span class="gradient-text">Earn More.</span><br/>
+          Waste Less.
+        </h1>
+        <p class="hero-sub">Connect directly with buyers, hire agricultural services, and manage your farm — all in one place. No middlemen. No confusion.</p>
+        <div class="hero-btns">
+          <button class="btn-hero-primary" onclick="showPage('auth')">Start Selling Crops</button>
+          <button class="btn-hero-secondary" onclick="showPage('marketplace')">Browse Market</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Farmers</span></div>
+          <div class="stat-div"></div>
+          <div class="stat"><span class="stat-num">₹1L+</span><span class="stat-label">Transactions</span></div>
+          <div class="stat-div"></div>
+          <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Service Providers</span></div>
+          <div class="stat-div"></div>
+          <div class="stat"><span class="stat-num">12</span><span class="stat-label">States</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card-stack">
+          <div class="floating-card card-1">
+            <span class="fc-icon">🌾</span>
+            <div><strong>Wheat — Premium Grade</strong><br/><small>₹2,240 / quintal · Punjab</small></div>
+          </div>
+          <div class="floating-card card-2">
+            <span class="fc-icon">🚜</span>
+            <div><strong>Tractor Available</strong><br/><small>₹800/hr · Haryana</small></div>
+          </div>
+          <div class="floating-card card-3">
+            <span class="fc-icon">⭐</span>
+            <div><strong>Order Delivered!</strong><br/><small>Rajesh Kumar rated 5★</small></div>
+          </div>
+          <div class="central-orb"><div class="orb-inner">AC</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section how-it-works" id="about">
+      <div class="section-label">Simple 3-Step Flow</div>
+      <h2 class="section-title">How AgriConnect Works</h2>
+      <div class="flow-grid">
+        <div class="flow-card" style="--c:#4CAF50">
+          <div class="flow-num">01</div>
+          <div class="flow-icon">👨‍🌾</div>
+          <h3>Farmer</h3>
+          <p>Register, list your crops with photos & prices, or post service requests. Reach thousands of buyers instantly.</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card" style="--c:#FF9800">
+          <div class="flow-num">02</div>
+          <div class="flow-icon">🛒</div>
+          <h3>Buyer</h3>
+          <p>Browse fresh produce, compare prices, add to cart, place orders directly. View seller profiles before buying.</p>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card" style="--c:#2196F3">
+          <div class="flow-num">03</div>
+          <div class="flow-icon">🔧</div>
+          <h3>Service Provider</h3>
+          <p>View job postings, send competitive bids, get hired for tractor work, labor, irrigation, or transport services.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULES -->
+    <section class="section modules-section">
+      <div class="section-label">Platform Features</div>
+      <h2 class="section-title">Everything Agriculture Needs</h2>
+      <div class="modules-grid">
+        <div class="module-card" onclick="showPage('marketplace')">
+          <div class="mod-icon">🏪</div>
+          <h3>Marketplace</h3>
+          <p>List & buy crops with real-time pricing, search filters, location-based results, and instant order placement.</p>
+          <span class="mod-link">Explore →</span>
+        </div>
+        <div class="module-card" onclick="showPage('services')">
+          <div class="mod-icon">⚙️</div>
+          <h3>Service Hub</h3>
+          <p>Post jobs, receive bids from qualified service providers. Hire tractors, labor, transport, irrigation experts.</p>
+          <span class="mod-link">Explore →</span>
+        </div>
+        <div class="module-card" onclick="showPage('chat')">
+          <div class="mod-icon">💬</div>
+          <h3>Live Chat</h3>
+          <p>Negotiate directly with buyers and service providers. Real-time messaging with file sharing.</p>
+          <span class="mod-link">Explore →</span>
+        </div>
+        <div class="module-card" onclick="showPage('orders')">
+          <div class="mod-icon">📦</div>
+          <h3>Order Tracking</h3>
+          <p>Track your orders from pending to delivered with a visual step-by-step progress tracker. Real-time status updates.</p>
+          <span class="mod-link">Explore →</span>
+        </div>
+        <div class="module-card" onclick="showPage('cart')">
+          <div class="mod-icon">🛒</div>
+          <h3>Shopping Cart</h3>
+          <p>Add multiple products to your cart, adjust quantities, and checkout all at once. Buyers only.</p>
+          <span class="mod-link">For Buyers →</span>
+        </div>
+        <div class="module-card">
+          <div class="mod-icon">⭐</div>
+          <h3>Ratings & Trust</h3>
+          <p>Verified user reviews, star ratings, and trust scores. Visit provider profiles to see full history.</p>
+          <span class="mod-link">Coming Soon</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section testimonials">
+      <div class="section-label">Success Stories</div>
+      <h2 class="section-title">Farmers Love AgriConnect</h2>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p>"Mujhe pehle aadhiyan ko bechna padta tha. Ab main seedha buyer ko bechta hoon aur 30% zyada kamaata hoon!"</p>
+          <div class="testi-author"><div class="ta-avatar">RS</div><div><strong>Ranjit Singh</strong><br/><small>Wheat Farmer, Punjab</small></div></div>
+        </div>
+        <div class="testi-card featured">
+          <div class="testi-stars">★★★★★</div>
+          <p>"The tractor booking feature saved me 3 days during harvest. Found a provider within 2 hours of posting the job!"</p>
+          <div class="testi-author"><div class="ta-avatar">PM</div><div><strong>Priya Mehta</strong><br/><small>Rice Farmer, Haryana</small></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p>"As a transporter, I get 5-6 job requests daily. My income has doubled since joining AgriConnect."</p>
+          <div class="testi-author"><div class="ta-avatar">AK</div><div><strong>Anil Kumar</strong><br/><small>Transport Provider, UP</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="section" id="contact" style="padding-top:40px">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Contact Us</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;max-width:900px">
+        <div>
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="display:flex;align-items:center;gap:16px;background:white;padding:20px;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+              <div style="width:48px;height:48px;background:#e8f5e9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">📞</div>
+              <div><div style="font-weight:700;font-size:.95rem">Helpline</div><div style="color:#6b7280;font-size:.88rem">1800-XXX-XXXX (Toll Free)</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;background:white;padding:20px;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+              <div style="width:48px;height:48px;background:#e8f5e9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">✉️</div>
+              <div><div style="font-weight:700;font-size:.95rem">Email</div><div style="color:#6b7280;font-size:.88rem">support@agriconnect.in</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;background:white;padding:20px;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+              <div style="width:48px;height:48px;background:#e8f5e9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">📍</div>
+              <div><div style="font-weight:700;font-size:.95rem">Office</div><div style="color:#6b7280;font-size:.88rem">New Delhi, India — 110001</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="background:white;padding:28px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Ramesh Kumar"/></div>
+          <div class="form-group"><label>Email / Mobile</label><input type="text" placeholder="ramesh@example.com"/></div>
+          <div class="form-group"><label>Message</label><textarea placeholder="How can we help you?" style="height:100px"></textarea></div>
+          <button class="btn-auth" onclick="toast('Message sent! We will get back to you soon. 🙏','success')">Send Message</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo">🌾 Agri<span class="accent">Connect</span></span>
+          <p>Empowering India's farmers through technology and direct market access.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Platform</h4>
+          <a href="#" onclick="showPage('marketplace')">Marketplace</a>
+          <a href="#" onclick="showPage('services')">Services</a>
+          <a href="#" onclick="showPage('orders')">Orders</a>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <a href="#" onclick="scrollToSection('contact')">Help Center</a>
+          <a href="#">Farmer Guide</a>
+          <a href="#" onclick="scrollToSection('contact')">Contact Us</a>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Refund Policy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 AgriConnect. Made with ❤️ for India's Farmers.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════ AUTH PAGE ═══════ -->
+  <div id="page-auth" class="page">
+    <div class="auth-page">
+      <div class="auth-left">
+        <div class="auth-brand" onclick="showPage('home')">🌾 Agri<span class="accent">Connect</span></div>
+        <h2>India ka Apna<br/>Agricultural Market</h2>
+        <div class="auth-features">
+          <div class="af">✅ Sell directly to buyers</div>
+          <div class="af">✅ Hire farm services easily</div>
+          <div class="af">✅ Secure payments</div>
+          <div class="af">✅ Real-time chat</div>
+          <div class="af">✅ Free to register</div>
+        </div>
+      </div>
+      <div class="auth-right">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchAuthTab('login', this)">Login</button>
+          <button class="auth-tab" onclick="switchAuthTab('register', this)">Register</button>
+        </div>
+
+        <div id="auth-login" class="auth-form active">
+          <h3>Welcome Back</h3>
+          <div class="form-group">
+            <label>Mobile / Email</label>
+            <input type="text" id="loginEmail" placeholder="Enter mobile or email" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPass" placeholder="Enter password" />
+          </div>
+          <div class="form-group">
+            <label>Login As</label>
+            <select id="loginRole">
+              <option value="farmer">👨‍🌾 Farmer</option>
+              <option value="buyer">🛒 Buyer</option>
+              <option value="provider">🔧 Service Provider</option>
+              <option value="admin">🛡️ Admin</option>
+            </select>
+          </div>
+          <button class="btn-auth" onclick="handleLogin()">Login →</button>
+          <p style="background:#f0fdf4;border-radius:8px;padding:12px;font-size:.82rem;color:#374151;margin-top:12px;line-height:1.6">
+            
+          </p>
+          <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuthTab('register', null)">Register here</a></p>
+
+        <!-- Social Login Divider -->
+<div style="display:flex;align-items:center;gap:12px;margin:20px 0">
+  <div style="flex:1;height:1px;background:#e5e7eb"></div>
+  <span style="font-size:.8rem;color:#9ca3af;font-weight:600">OR CONTINUE WITH</span>
+  <div style="flex:1;height:1px;background:#e5e7eb"></div>
+</div>
+
+<!-- Social Buttons -->
+<div style="display:flex;flex-direction:column;gap:10px">
+  <a href="http://localhost:3000/api/auth/google"
+     style="display:flex;align-items:center;justify-content:center;gap:12px;
+            padding:12px;border:1.5px solid #e5e7eb;border-radius:10px;
+            text-decoration:none;color:#374151;font-weight:600;font-size:.92rem;
+            font-family:'DM Sans',sans-serif;transition:all .2s;background:white"
+     onmouseover="this.style.background='#f9fafb';this.style.borderColor='#d1d5db'"
+     onmouseout="this.style.background='white';this.style.borderColor='#e5e7eb'">
+    <img src="https://www.google.com/favicon.ico" style="width:20px;height:20px"/>
+    Continue with Google
+  </a>
+
+  <a href="http://localhost:3000/api/auth/facebook"
+     style="display:flex;align-items:center;justify-content:center;gap:12px;
+            padding:12px;background:#1877f2;border-radius:10px;
+            text-decoration:none;color:white;font-weight:600;font-size:.92rem;
+            font-family:'DM Sans',sans-serif;transition:all .2s"
+     onmouseover="this.style.opacity='.9'"
+     onmouseout="this.style.opacity='1'">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+    </svg>
+    Continue with Facebook
+  </a>
+</div>
+
+<p style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:14px">
+  By continuing, you agree to AgriConnect's Terms of Service
+</p>
+
+
+        </div>
+
+        <div id="auth-register" class="auth-form">
+          <h3>Create Account</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="regName" placeholder="Ramesh Kumar" />
+            </div>
+            <div class="form-group">
+              <label>Mobile Number</label>
+              <input type="text" id="regMobile" placeholder="+91 9876543210" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="regEmail" placeholder="ramesh@example.com" />
+          </div>
+          <div class="form-group">
+            <label>I am a...</label>
+            <div class="role-selector" id="roleSelector">
+              <div class="role-opt active" data-role="farmer" onclick="selectRole(this)">
+                <span>👨‍🌾</span><strong>Farmer</strong><small>Sell crops & hire services</small>
+              </div>
+              <div class="role-opt" data-role="buyer" onclick="selectRole(this)">
+                <span>🛒</span><strong>Buyer</strong><small>Buy fresh produce</small>
+              </div>
+              <div class="role-opt" data-role="provider" onclick="selectRole(this)">
+                <span>🔧</span><strong>Service Provider</strong><small>Offer farm services</small>
+              </div>
+            </div>
+          </div>
+          <div id="providerFields" style="display:none">
+            <div class="form-group">
+              <label>Service Type</label>
+              <select id="serviceType">
+                <option>Tractor / Machinery</option>
+                <option>Labor / Manpower</option>
+                <option>Transportation</option>
+                <option>Irrigation Expert</option>
+                <option>Pesticide Spraying</option>
+                <option>Soil Testing</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>State</label>
+            <select id="regState">
+              <option>Punjab</option><option>Haryana</option><option>Uttar Pradesh</option>
+              <option>Maharashtra</option><option>Madhya Pradesh</option><option>Rajasthan</option>
+              <option>Bihar</option><option>West Bengal</option><option>Andhra Pradesh</option>
+              <option>Karnataka</option><option>Gujarat</option><option>Tamil Nadu</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="regPass" placeholder="Min 6 characters" />
+          </div>
+          <button class="btn-auth" onclick="handleRegister()">Create Account →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ MARKETPLACE PAGE ═══════ -->
+  <div id="page-marketplace" class="page">
+    <div class="page-header">
+      <div class="ph-content">
+        <h2>🏪 Crop Marketplace</h2>
+        <p>Fresh produce direct from farmers — no middlemen, best prices</p>
+      </div>
+      <button class="btn-primary" onclick="showModal('addProductModal')" id="addCropBtn" style="display:none">+ List Your Crop</button>
+    </div>
+
+    <div class="filter-bar">
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" id="searchCrops" placeholder="Search crops, vegetables, fruits..." oninput="filterProducts()"/>
+      </div>
+      <select onchange="filterProducts()" id="filterCategory">
+        <option value="">All Categories</option>
+        <option>Grains & Cereals</option>
+        <option>Vegetables</option>
+        <option>Fruits</option>
+        <option>Pulses & Legumes</option>
+        <option>Spices & Herbs</option>
+        <option>Oilseeds</option>
+      </select>
+      <select onchange="filterProducts()" id="filterState">
+        <option value="">All States</option>
+        <option>Punjab</option><option>Haryana</option><option>Uttar Pradesh</option>
+              <option>Maharashtra</option><option>Madhya Pradesh</option><option>Rajasthan</option>
+              <option>Bihar</option><option>West Bengal</option><option>Andhra Pradesh</option>
+              <option>Karnataka</option><option>Gujarat</option><option>Tamil Nadu</option>
+      </select>
+      <select onchange="filterProducts()" id="filterSort">
+        <option value="newest">Newest First</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+      </select>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+
+    <!-- PRODUCT DETAIL MODAL (description shown here) -->
+    <div class="modal-overlay" id="orderModal" onclick="closeModal('orderModal')">
+      <div class="modal modal-lg" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <h3>Product Details</h3>
+          <button onclick="closeModal('orderModal')">✕</button>
+        </div>
+        <div class="modal-body" id="orderModalBody"></div>
+      </div>
+    </div>
+
+    <!-- ADD PRODUCT MODAL -->
+    <div class="modal-overlay" id="addProductModal" onclick="closeModal('addProductModal')">
+      <div class="modal modal-lg" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <h3>List Your Crop</h3>
+          <button onclick="closeModal('addProductModal')">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Product Photo <span style="color:#9ca3af;font-weight:400">(optional)</span></label>
+            <div class="img-upload-area" onclick="document.getElementById('cropImage').click()">
+              <input type="file" id="cropImage" accept="image/*" onchange="previewImage(this,'cropImagePreview')" style="display:none"/>
+              <div class="upload-icon">📷</div>
+              <div class="upload-text">Click to upload a photo of your crop</div>
+              <div class="upload-hint">JPG, PNG, WEBP · Max 5MB</div>
+            </div>
+            <div id="cropImagePreview"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Crop Name</label><input type="text" id="cropName" placeholder="e.g. Wheat, Rice, Tomato"/></div>
+            <div class="form-group"><label>Category</label>
+              <select id="cropCat">
+                <option>Grains & Cereals</option><option>Vegetables</option><option>Fruits</option>
+                <option>Pulses & Legumes</option><option>Spices & Herbs</option><option>Oilseeds</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Price (₹ per unit)</label><input type="number" id="cropPrice" placeholder="2200"/></div>
+            <div class="form-group"><label>Quantity</label><input type="number" id="cropQty" placeholder="500"/></div>
+            <div class="form-group"><label>Unit</label>
+              <select id="cropUnit"><option>Quintal</option><option>Kg</option><option>Ton</option><option>Dozen</option><option>Box</option></select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Harvest Date</label><input type="date" id="cropHarvest"/></div>
+            <div class="form-group"><label>State</label>
+              <select id="cropState"><option>Punjab</option><option>Haryana</option><option>Uttar Pradesh</option><option>Maharashtra</option><option>MP</option><option>Rajasthan</option></select>
+            </div>
+          </div>
+          <div class="form-group"><label>Description / Quality Notes</label><textarea id="cropDesc" placeholder="Describe quality, grade, storage conditions..."></textarea></div>
+          <button class="btn-auth" onclick="addProduct()">List Crop for Sale</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ SERVICES PAGE ═══════ -->
+  <div id="page-services" class="page">
+    <div class="page-header">
+      <div class="ph-content">
+        <h2>⚙️ Agricultural Services</h2>
+        <p>Hire tractors, labor, transport & more — post a job or browse providers</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-secondary" onclick="showModal('addServiceModal')" id="addServiceBtn" style="display:none">+ Offer Service</button>
+        <button class="btn-primary" onclick="showModal('postJobModal')" id="postJobBtn" style="display:none">+ Post Job</button>
+      </div>
+    </div>
+
+    <div class="service-tabs">
+      <button class="stab active" onclick="switchServiceTab('providers', this)">Service Providers</button>
+      <button class="stab" onclick="switchServiceTab('jobs', this)">Job Postings</button>
+    </div>
+
+    <div id="svc-providers" class="service-section active">
+      <div class="filter-bar">
+        <div class="search-bar"><span>🔍</span><input type="text" id="searchProviders" placeholder="Search services..." oninput="filterProviders()"/></div>
+        <select onchange="filterProviders()" id="filterServiceType">
+          <option value="">All Services</option>
+          <option>Tractor / Machinery</option><option>Labor / Manpower</option>
+          <option>Transportation</option><option>Irrigation Expert</option>
+          <option>Pesticide Spraying</option><option>Soil Testing</option>
+        </select>
+      </div>
+      <div class="service-grid" id="serviceGrid"></div>
+    </div>
+
+    <div id="svc-jobs" class="service-section">
+      <div class="jobs-grid" id="jobsGrid"></div>
+    </div>
+
+    <!-- POST JOB MODAL -->
+    <div class="modal-overlay" id="postJobModal" onclick="closeModal('postJobModal')">
+      <div class="modal modal-lg" onclick="event.stopPropagation()">
+        <div class="modal-header"><h3>Post a Job / Service Request</h3><button onclick="closeModal('postJobModal')">✕</button></div>
+        <div class="modal-body">
+          <div class="form-group"><label>Job Title</label><input type="text" id="jobTitle" placeholder="e.g. Need tractor for 5-acre wheat field"/></div>
+          <div class="form-row">
+            <div class="form-group"><label>Service Type</label>
+              <select id="jobType">
+                <option>Tractor / Machinery</option><option>Labor / Manpower</option>
+                <option>Transportation</option><option>Irrigation Expert</option>
+                <option>Pesticide Spraying</option><option>Soil Testing</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Budget (₹)</label><input type="number" id="jobBudget" placeholder="5000"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Location</label><input type="text" id="jobLocation" placeholder="Village, District, State"/></div>
+            <div class="form-group"><label>Required By</label><input type="date" id="jobDate"/></div>
+          </div>
+          <div class="form-group"><label>Description</label><textarea id="jobDesc" placeholder="Describe your requirements..."></textarea></div>
+          <button class="btn-auth" onclick="postJob()">Post Job Request</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD SERVICE MODAL -->
+    <div class="modal-overlay" id="addServiceModal" onclick="closeModal('addServiceModal')">
+      <div class="modal modal-lg" onclick="event.stopPropagation()">
+        <div class="modal-header"><h3>List Your Service</h3><button onclick="closeModal('addServiceModal')">✕</button></div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Service Photo <span style="color:#9ca3af;font-weight:400">(optional)</span></label>
+            <div class="img-upload-area" onclick="document.getElementById('svcImage').click()">
+              <input type="file" id="svcImage" accept="image/*" onchange="previewImage(this,'svcImagePreview')" style="display:none"/>
+              <div class="upload-icon">📷</div>
+              <div class="upload-text">Click to upload a photo of your service / equipment</div>
+              <div class="upload-hint">JPG, PNG, WEBP · Max 5MB</div>
+            </div>
+            <div id="svcImagePreview"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Service Title</label><input type="text" id="svcTitle" placeholder="e.g. Tractor with rotavator — 50HP"/></div>
+            <div class="form-group"><label>Service Type</label>
+              <select id="svcType">
+                <option>Tractor / Machinery</option><option>Labor / Manpower</option>
+                <option>Transportation</option><option>Irrigation Expert</option>
+                <option>Pesticide Spraying</option><option>Soil Testing</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Rate (₹)</label><input type="number" id="svcRate" placeholder="800"/></div>
+            <div class="form-group"><label>Rate Per</label>
+              <select id="svcPer"><option>Hour</option><option>Day</option><option>Acre</option><option>Trip</option><option>Fixed</option></select>
+            </div>
+            <div class="form-group"><label>Location</label><input type="text" id="svcLocation" placeholder="District, State"/></div>
+          </div>
+          <div class="form-group"><label>Description</label><textarea id="svcDesc" placeholder="Describe your service, equipment, experience..."></textarea></div>
+          <button class="btn-auth" onclick="addService()">List Service</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BID MODAL -->
+    <div class="modal-overlay" id="bidModal" onclick="closeModal('bidModal')">
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header"><h3>Submit Your Bid</h3><button onclick="closeModal('bidModal')">✕</button></div>
+        <div class="modal-body" id="bidModalBody"></div>
+      </div>
+    </div>
+
+     <!-- SERVICE DETAIL MODAL — ADD THIS -->
+    <div class="modal-overlay" id="svcDetailModal" onclick="closeModal('svcDetailModal')">
+      <div class="modal modal-lg" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <h3>Service Details</h3>
+          <button onclick="closeModal('svcDetailModal')">✕</button>
+        </div>
+        <div class="modal-body" id="svcDetailModalBody"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════ ORDERS PAGE ═══════ -->
+  <div id="page-orders" class="page">
+    <div class="page-header">
+      <div class="ph-content">
+        <h2>📦 My Orders</h2>
+        <p>Track your orders from placement to delivery</p>
+      </div>
+      <button class="btn-primary" onclick="showPage('marketplace')">Browse Market</button>
+    </div>
+    <div id="ordersContent"></div>
+  </div>
+
+  <!-- ═══════ CART PAGE ═══════ -->
+  <div id="page-cart" class="page">
+    <div class="page-header">
+      <div class="ph-content">
+        <h2>🛒 My Cart</h2>
+        <p>Review items and checkout</p>
+      </div>
+      <button class="btn-secondary" onclick="showPage('marketplace')">+ Add More Items</button>
+    </div>
+    <div id="cartContent"></div>
+  </div>
+
+  <!-- ═══════ PROVIDER PROFILE PAGE ═══════ -->
+  <div id="page-profile" class="page">
+    <div style="background:white;border-bottom:1px solid #f3f4f6;padding:20px 32px;display:flex;align-items:center;gap:16px">
+      <button onclick="goBack()" style="background:#f3f4f6;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;color:#374151;display:flex;align-items:center;gap:6px">← Back</button>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin:0">User Profile</h2>
+    </div>
+    <div id="profileContent"></div>
+  </div>
+
+  <!-- ═══════ MY PROFILE PAGE (editable) ═══════ -->
+  <div id="page-my-profile" class="page">
+    <div style="background:white;border-bottom:1px solid #f3f4f6;padding:20px 32px;display:flex;align-items:center;gap:16px">
+      <button onclick="goBack()" style="background:#f3f4f6;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;color:#374151;display:flex;align-items:center;gap:6px">← Back</button>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin:0">My Profile</h2>
+    </div>
+    <div id="myProfileContent"></div>
+  </div>
+
+  <!-- ═══════ DASHBOARD PAGE ═══════ -->
+  <div id="page-dashboard" class="page">
+    <div class="page-header">
+      <div class="ph-content">
+        <h2 id="dashTitle">📊 Dashboard</h2>
+        <p id="dashSubtitle">Overview of your activity on AgriConnect</p>
+      </div>
+    </div>
+    <div id="dashContent"></div>
+  </div>
+
+  <!-- ═══════ CHAT PAGE ═══════ -->
+  <div id="page-chat" class="page">
+    <div class="chat-layout">
+      <div class="chat-sidebar">
+        <div class="chat-sidebar-header">
+          <h3>💬 Messages</h3>
+          <button class="btn-sm" onclick="showNewChatSearch()">+ New</button>
+        </div>
+        <div class="chat-search">
+          <input type="text" placeholder="Search conversations..."/>
+        </div>
+        <div class="chat-list" id="chatList"></div>
+      </div>
+      <div class="chat-main" id="chatMain">
+        <div class="chat-empty">
+          <div class="ce-icon">💬</div>
+          <h3>Select a conversation</h3>
+          <p>Choose from your message list to start chatting</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANAGE PRODUCT MODAL -->
+<div class="modal-overlay" id="manageProductModal" onclick="closeModal('manageProductModal')">
+  <div class="modal modal-lg" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Manage Listing</h3>
+      <button onclick="closeModal('manageProductModal')">✕</button>
+    </div>
+    <div class="modal-body" id="manageProductBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="manageServiceModal" onclick="closeModal('manageServiceModal')">
+  <div class="modal modal-lg" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Manage Service</h3>
+      <button onclick="closeModal('manageServiceModal')">✕</button>
+    </div>
+    <div class="modal-body" id="manageServiceBody"></div>
+  </div>
+</div>
+
+<!-- REVIEWS PAGE MODAL -->
+<div class="modal-overlay" id="reviewsPageModal" onclick="closeModal('reviewsPageModal')">
+  <div class="modal modal-lg" onclick="event.stopPropagation()" style="max-width:680px">
+    <div class="modal-header">
+      <h3 id="reviewsModalTitle">⭐ Reviews & Ratings</h3>
+      <button onclick="closeModal('reviewsPageModal')">✕</button>
+    </div>
+    <div class="modal-body" id="reviewsModalBody" style="max-height:70vh;overflow-y:auto"></div>
+  </div>
+</div>
+
+<!-- SUBMIT REVIEW MODAL -->
+<div class="modal-overlay" id="submitReviewModal" onclick="closeModal('submitReviewModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>✍️ Write a Review</h3>
+      <button onclick="closeModal('submitReviewModal')">✕</button>
+    </div>
+    <div class="modal-body" id="submitReviewBody"></div>
+  </div>
+</div>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>  
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
